@@ -13,21 +13,22 @@ import java.util.TimerTask;
 
 public class FloatWindowService extends Service {
 
-    public static void start(Context context){
-        Intent intent=new Intent(context,FloatWindowService.class);
+    public static void start(Context context) {
+        Intent intent = new Intent(context, FloatWindowService.class);
         context.startService(intent);
     }
 
-    public static void stop(Context context){
-        Intent intent=new Intent(context,FloatWindowService.class);
+    public static void stop(Context context) {
+        Intent intent = new Intent(context, FloatWindowService.class);
         context.stopService(intent);
     }
 
-    private static boolean isRunning=false;
+    private static boolean isRunning = false;
 
-    public static boolean isRunning(){
+    public static boolean isRunning() {
         return isRunning;
     }
+
     /**
      * 用于在线程中创建或移除悬浮窗。
      */
@@ -44,7 +45,7 @@ public class FloatWindowService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        isRunning=true;
+        isRunning = true;
         // 开启定时器，每隔0.5秒刷新一次
         if (timer == null) {
             timer = new Timer();
@@ -53,12 +54,11 @@ public class FloatWindowService extends Service {
     }
 
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         MyWindowManager.removeFloatWindow(getApplicationContext());
-        isRunning=false;
+        isRunning = false;
     }
 
     @Override
@@ -70,19 +70,19 @@ public class FloatWindowService extends Service {
 
         @Override
         public void run() {
-            if(!isRunning)
+            if (!isRunning)
                 return;
             // 当前界面是桌面，且没有悬浮窗显示，则创建悬浮窗。
             if (!MyWindowManager.isWindowShowing()) {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if(!isRunning)
+                        if (!isRunning)
                             return;
                         MyWindowManager.createFloatWindow(getApplicationContext());
                     }
                 });
-            }else{
+            } else {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {

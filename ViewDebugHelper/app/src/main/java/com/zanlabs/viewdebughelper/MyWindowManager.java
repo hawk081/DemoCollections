@@ -63,7 +63,8 @@ public class MyWindowManager {
 				mFloatWindowParams.width = FloatWindowView.viewWidth;
 				mFloatWindowParams.height = FloatWindowView.viewHeight;
 				mFloatWindowParams.x = screenWidth;
-				mFloatWindowParams.y = screenHeight / 2;
+				// 默认显示在屏幕顶部
+				mFloatWindowParams.y = 0;//screenHeight / 2;
 			}
 			mFloatWindow.setParams(mFloatWindowParams);
 			windowManager.addView(mFloatWindow, mFloatWindowParams);
